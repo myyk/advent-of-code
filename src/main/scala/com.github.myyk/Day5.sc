@@ -1,4 +1,3 @@
-import scala.collection.immutable.Queue
 import scala.io.Source
 
 //TODO: figure out how to reuse the input reading
