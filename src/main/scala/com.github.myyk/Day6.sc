@@ -1,5 +1,6 @@
 import scala.annotation.tailrec
 import scala.io.Source
+import scala.util.control.Breaks
 
 //TODO: figure out how to reuse the input reading
 val projectBase = "/Users/myyk.seok/workspace/advent-of-code"
@@ -136,3 +137,49 @@ val nonInfiniteOccurances = occurrances.filterNot(n => infiniteValues.contains(n
 // Answer 1
 val (ans1, occ)= nonInfiniteOccurances.maxBy(_._2)
 //ans1 = 4829
+
+val maxTotalDistance = if (fileSource) {
+  10000
+} else {
+  32
+}
+
+def isTotalDistanceLessThan(n:Int, x:Int, y:Int):Boolean = {
+  import Breaks.{break, breakable}
+  var result = true
+
+  var totalDistance = 0
+  breakable {
+    for {
+      next <- inputs
+    } {
+      totalDistance += (x - next.x).abs + (y - next.y).abs
+      if (totalDistance >= n) {
+        result = false
+        break
+      }
+    }
+  }
+  result
+}
+
+var ans2 = 0
+for {
+  y <- 0 until grid.size
+  x <- 0 until grid.head.size
+} {
+  if (x == 0) {
+    println
+  }
+
+  if (isTotalDistanceLessThan(n = maxTotalDistance, x = x, y = y)) {
+    ans2 += 1
+    print("#")
+  } else {
+    print(".")
+  }
+}
+
+// Answer 2
+ans2
+//ans2 = 46966
