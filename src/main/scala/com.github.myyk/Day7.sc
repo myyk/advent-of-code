@@ -35,31 +35,19 @@ val inputs = for {
   to.toCharArray.head -> from.toCharArray.head
 }
 
-var graph = Map.empty[Char, Set[Char]].withDefaultValue(Set.empty)
-for {
-  (to, from) <- inputs
-} {
-  graph = graph + (to -> (graph(to) + from))
+def makeGraph(): Map[Char, Set[Char]] = {
+  var graph = Map.empty[Char, Set[Char]].withDefaultValue(Set.empty)
+  for {
+    (to, from) <- inputs
+  } {
+    graph = graph + (to -> (graph(to) + from))
+  }
+  graph
 }
 
+var graph = makeGraph()
 
 val roots = graph.keySet -- graph.values.flatten.toSet
-
-//val sortedRoots = mutable.PriorityQueue[Char]().reverse
-//sortedRoots.enqueue(roots.toSeq:_*)
-//@tailrec
-//def topoSort(roots: mutable.PriorityQueue[Char], visited: Set[Char], graph: Map[Char, Set[Char]], result: List[Char]): List[Char] = {
-//  if (roots.isEmpty) {
-//    result.reverse
-//  } else {
-//    val next = roots.dequeue
-//    val toVisit = graph(next) -- visited
-//    roots.enqueue(toVisit.toSeq:_*)
-//
-//    topoSort(roots, visited ++ toVisit, graph - next, next :: result)
-//  }
-//}
-//val dag = topoSort(sortedRoots, Set.empty, graph, Nil)
 
 @tailrec
 def topoSort(possibleRoots: Set[Char], graph: Map[Char, Set[Char]], result: List[Char]): List[Char] = {
@@ -77,3 +65,61 @@ val dag = topoSort(roots, graph, Nil)
 
 // Answer 1
 val ans1 = dag.mkString
+// PFKQWJSVUXEMNIHGTYDOZACRLB
+
+val baseSeconds = if (fileSource) { 60 } else { 0 }
+val numElves = if (fileSource) { 4 } else { 2 }
+
+def secondsToComplete(task: Char): Int = {
+  (task - 'A') + baseSeconds + 1
+}
+
+// priority queue of when next work is done
+val workQueue = mutable.PriorityQueue[(Int, Char)]().reverse
+var secondsElapsed = 0
+
+var taskGraph = makeGraph()
+
+// get initial unblockedTasks
+var unblockedTasks = taskGraph.keySet -- taskGraph.values.flatten.toSet
+
+def addToUnblockedTasks(possibleUnblockedTasks: Set[Char]): Set[Char] = {
+  unblockedTasks ++ possibleUnblockedTasks -- taskGraph.values.flatten.toSet
+}
+
+def completeATask(): Unit = {
+  val (currentTime, task) = workQueue.dequeue()
+  secondsElapsed = currentTime
+
+  val possiblyUnblocked = taskGraph(task)
+  taskGraph = taskGraph - task
+  unblockedTasks = addToUnblockedTasks(possiblyUnblocked)
+
+  println(s"completing $task at ${secondsElapsed}s")
+  println(s"unblockedTask = $unblockedTasks, possiblyUnblocked = $possiblyUnblocked")
+}
+
+while (taskGraph.nonEmpty || workQueue.nonEmpty || unblockedTasks.nonEmpty) {
+  // Take an unblocked task
+  if (unblockedTasks.nonEmpty) {
+    val nextTask = unblockedTasks.toList.sorted.head
+
+    // Allocate work to elf by adding to priority queue
+    // if there's less than numElves in queue.
+    if (workQueue.size < numElves) {
+      workQueue.enqueue((secondsElapsed + secondsToComplete(nextTask), nextTask))
+      unblockedTasks = unblockedTasks - nextTask
+    } else {
+      // otherwise, wait for an elf, by moving time forward so we can
+      // assign work to an elf.
+      completeATask()
+    }
+  } else {
+    // if we can't take a task, then move time forward until a task
+    // completes and check again.
+    completeATask()
+  }
+}
+
+// Answer 2
+val ans2 = secondsElapsed
