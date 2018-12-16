@@ -1,4 +1,3 @@
-import scala.collection.mutable
 import scala.io.Source
 
 //TODO: figure out how to reuse the input reading
