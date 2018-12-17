@@ -1,6 +1,5 @@
 import scala.io.Source
 
-
 //TODO: figure out how to reuse the input reading
 val projectBase = "/Users/myyk.seok/workspace/advent-of-code"
 val sampleDir = projectBase + "/samples"
