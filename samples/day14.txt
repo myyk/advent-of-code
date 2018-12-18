@@ -1,0 +1,4 @@
+// 20181218153545
+// https://adventofcode.com/2018/day/14/input
+
+110201
