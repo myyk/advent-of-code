@@ -8,8 +8,8 @@ def readInput(day: Int):Seq[String] = {
   Source.fromFile(s"$sampleDir/day$day.txt").getLines.toSeq
 }
 
-val fileSource = false
-//val fileSource = true
+//val fileSource = false
+val fileSource = true
 val rawInput = if (fileSource) {
   readInput(13)
 } else {
@@ -53,19 +53,25 @@ case class XYPair(x:Int, y:Int) {
 implicit val XYPairOrdering: Ordering[XYPair] =
   Ordering by (loc => (loc.x, loc.y))
 
-case class Cart(direction: Char, isWorking: Boolean = true) {
+case class Cart(direction: Char, intersectionNum: Int = 0, isWorking: Boolean = true) {
   // not the best data modeling, but this is throw away code
   def move(loc: XYPair, graph: Map[XYPair, Set[XYPair]], carts: Map[XYPair, Cart]): Map[XYPair, Cart] = {
     if (this.isWorking) {
+      val cart = if (graph(loc).size == 4) {
+        intersectionAdjusted
+      } else {
+        this
+      }
+
       // move the cart
-      val nextPoint = this.nextLocationFrom(loc)
+      val nextPoint = cart.nextLocationFrom(loc)
 
       if (carts.contains(nextPoint)) {
         // break carts
         // Assuming direction and # of cards here doesn't matter
-        carts - loc + (nextPoint -> this.break)
+        carts - loc + (nextPoint -> cart.break)
       } else {
-        carts - loc + (nextPoint -> this.withNextDirection(loc, nextPoint, graph))
+        carts - loc + (nextPoint -> cart.withNextDirection(loc, nextPoint, graph))
       }
     } else {
       // don't move the cart
@@ -93,7 +99,6 @@ case class Cart(direction: Char, isWorking: Boolean = true) {
       this
     } else {
       // turning cases
-      println(s"neighborsOfNext = $neighborsOfNext")
       val nextNextPoint = (neighborsOfNext - currentPoint).head
       val nextDirection = if (nextNextPoint == nextPoint.^) {
         '^'
@@ -108,7 +113,35 @@ case class Cart(direction: Char, isWorking: Boolean = true) {
     }
   }
 
+  def intersectionAdjusted: Cart = {
+    (this.intersectionNum % 3 match {
+      case 0 => this.turnLeft
+      case 1 => this
+      case 2 => this.turnRight
+    }).copy(intersectionNum = this.intersectionNum + 1)
+  }
+
+  def turnLeft: Cart = {
+    val newDirection = this.direction match {
+      case '>' => '^'
+      case '<' => 'v'
+      case '^' => '<'
+      case 'v' => '>'
+    }
+    this.copy(direction = newDirection)
+  }
+
+  def turnRight: Cart = this.turnLeft.turnLeft.turnLeft
 }
+
+def printGraphConnectivity(graph: Map[XYPair, Set[XYPair]]): Unit = {
+  for {
+    next <- graph.toSeq.sortBy(_._1)
+  } {
+    println(next)
+  }
+}
+
 
 def buildGraph(input: Iterable[String]): Map[XYPair, Set[XYPair]] = {
   // Could improve by reusing the point references if it matters with mem usage
@@ -120,48 +153,11 @@ def buildGraph(input: Iterable[String]): Map[XYPair, Set[XYPair]] = {
     XYPair(x, y) -> nextChar
   }).toMap.withDefaultValue(' ')
 
-  def neighborSet(point: XYPair, pointsToType: Map[XYPair, Char]): Set[XYPair] = {
-    def connectsVertically(pointType: Char): Boolean = {
-      pointType match {
-        case '/' | '\\' | '|' | '+' => true
-        case _ => false
-      }
-    }
-
-    def connectsHorizontally(pointType: Char): Boolean = {
-      pointType match {
-        case '/' | '\\' | '-' | '+' => true
-        case _ => false
-      }
-    }
-
-    val upNeighbor = if (connectsVertically(pointsToType(point.^))) {
-      Set(point.^)
-    } else {
-      Set.empty
-    }
-    val downNeighbor = if (connectsVertically(pointsToType(point.v))) {
-      Set(point.v)
-    } else {
-      Set.empty
-    }
-    val leftNeighbor = if (connectsHorizontally(pointsToType(point.<))) {
-      Set(point.<)
-    } else {
-      Set.empty
-    }
-    val rightNeighbor = if (connectsHorizontally(pointsToType(point.>))) {
-      Set(point.>)
-    } else {
-      Set.empty
-    }
-
-    upNeighbor ++ downNeighbor ++ leftNeighbor ++ rightNeighbor
-  }
+  var result = Map.empty[XYPair, Set[XYPair]].withDefaultValue(Set.empty)
 
   for {
-    (point, pointType) <- pointsToType
-  } yield {
+    (point, pointType) <- pointsToType.toList
+  } {
     val neighbors = pointType match {
       case '/' =>
         val isDownRight = pointsToType(point.^) match {
@@ -202,11 +198,25 @@ def buildGraph(input: Iterable[String]): Map[XYPair, Set[XYPair]] = {
       case '-' => Set(point.<, point.>)
       case '+' => Set(point.^, point.v, point.<, point.>)
       case '>' | '<' | '^' | 'v' =>
-        neighborSet(point, pointsToType)
+        // since there are no carts next to other carts in initial settings
+        // we can rely on putting their direction in when filling other points
+        Set.empty
     }
 
-    (point -> neighbors)
+    for {
+      nextNeighbor <- neighbors
+    } {
+      val neighborNeighbors = result(nextNeighbor) + point
+      result = result + (nextNeighbor -> neighborNeighbors)
+    }
+
+    val pointNeighbors = result(point) ++ neighbors
+    result = result + (point -> pointNeighbors)
   }
+
+  printGraphConnectivity(result)
+
+  result
 }
 
 def printGraph(input: Iterable[String], carts: Map[XYPair, Cart]): Unit = {
@@ -226,7 +236,12 @@ def printGraph(input: Iterable[String], carts: Map[XYPair, Cart]): Unit = {
 
       val loc = XYPair(x, y)
       val c = if (carts.contains(loc)) {
-        carts(loc).direction
+        val cart = carts(loc)
+        if (cart.isWorking) {
+          carts(loc).direction
+        } else {
+          'X'
+        }
       } else {
         nextChar match {
           case '>' | '<' | '^' | 'v' =>
@@ -276,11 +291,15 @@ printGraph(rawInput, inputCarts)
 
 var carts = inputCarts
 while (carts.values.forall(_.isWorking)) {
+//for (_ <- 0 to 20) {
   carts = moveWorldOneStep(graph, carts, 1)
   printGraph(rawInput, carts)
 }
 
 // Answer 1
-val ans1 = carts.toSet.find(!_._2.isWorking).get
+val ans1 = carts.toSet.find(!_._2.isWorking).get._1
+// 69,46
 
 //printGraph(rawInput, inputCarts)
+
+// Answer 2
