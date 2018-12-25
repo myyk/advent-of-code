@@ -13,13 +13,24 @@ val fileSource = true
 val rawInput = if (fileSource) {
   readInput(13)
 } else {
+  // Example 1
+//  Seq(
+//      """/->-\         """,
+//      """|   |  /----\ """,
+//      """| /-+--+-\  | """,
+//      """| | |  | v  | """,
+//      """\-+-/  \-+--/ """,
+//      """  \------/    """,
+//  )
+  // Example 2
   Seq(
-      """/->-\         """,
-      """|   |  /----\ """,
-      """| /-+--+-\  | """,
-      """| | |  | v  | """,
-      """\-+-/  \-+--/ """,
-      """  \------/    """,
+    """/>-<\  """,
+    """|   |  """,
+    """| /<+-\""",
+    """| | | v""",
+    """\>+</ |""",
+    """  |   ^""",
+    """  \<->/""",
   )
 }
 
@@ -69,6 +80,7 @@ case class Cart(direction: Char, intersectionNum: Int = 0, isWorking: Boolean = 
       if (carts.contains(nextPoint)) {
         // break carts
         // Assuming direction and # of cards here doesn't matter
+        println(s"breaking cart at $nextPoint. carts.size = ${carts.size}, new size = ${(carts - loc + (nextPoint -> cart.break)).size}")
         carts - loc + (nextPoint -> cart.break)
       } else {
         carts - loc + (nextPoint -> cart.withNextDirection(loc, nextPoint, graph))
@@ -94,10 +106,14 @@ case class Cart(direction: Char, intersectionNum: Int = 0, isWorking: Boolean = 
 
   def withNextDirection(currentPoint: XYPair, nextPoint: XYPair, graph: Map[XYPair, Set[XYPair]]): Cart = {
     val neighborsOfNext = graph(nextPoint)
+
     // straight cases
     if (neighborsOfNext.contains(this.nextLocationFrom(nextPoint))) {
       this
     } else {
+      // TODO: remove debug
+      println(s"neighborsOfNext = $neighborsOfNext, currentPoint = $currentPoint")
+
       // turning cases
       val nextNextPoint = (neighborsOfNext - currentPoint).head
       val nextDirection = if (nextNextPoint == nextPoint.^) {
@@ -139,6 +155,9 @@ def printGraphConnectivity(graph: Map[XYPair, Set[XYPair]]): Unit = {
     next <- graph.toSeq.sortBy(_._1)
   } {
     println(next)
+    if (next._2.size != 2 && next._2.size != 4) {
+      throw new Exception(s"wtf: next = $next")
+    }
   }
 }
 
@@ -150,6 +169,8 @@ def buildGraph(input: Iterable[String]): Map[XYPair, Set[XYPair]] = {
     (nextChar, x) <- nextLine.zipWithIndex.toSet
     if !nextChar.isWhitespace
   } yield {
+    if (x == 148 && y == 90) println(s"MYYK: $nextChar in [$nextLine]")
+
     XYPair(x, y) -> nextChar
   }).toMap.withDefaultValue(' ')
 
@@ -162,11 +183,11 @@ def buildGraph(input: Iterable[String]): Map[XYPair, Set[XYPair]] = {
       case '/' =>
         val isDownRight = pointsToType(point.^) match {
           case ' ' => pointsToType(point.v) match {
-            case '|' | '+' => true
+            case '|' | '+' | '^' | 'v' => true
             case _ => false
           }
           case other => other match {
-            case '|' | '+' => false
+            case '|' | '+' | '^' | 'v' => false
             case _ => true
           }
         }
@@ -180,11 +201,11 @@ def buildGraph(input: Iterable[String]): Map[XYPair, Set[XYPair]] = {
         // copy-pasta
         val isDownLeft = pointsToType(point.^) match {
           case ' ' => pointsToType(point.v) match {
-            case '|' | '+' => true
+            case '|' | '+' | '^' | 'v' => true
             case _ => false
           }
           case other => other match {
-            case '|' | '+' => false
+            case '|' | '+' | '^' | 'v' => false
             case _ => true
           }
         }
@@ -274,15 +295,27 @@ def buildCarts(input: Iterable[String]): Map[XYPair, Cart] = {
 val graph = buildGraph(rawInput)
 val inputCarts = buildCarts(rawInput)
 
-def moveWorldOneStep(graph: Map[XYPair, Set[XYPair]], carts: Map[XYPair, Cart], maxBroken: Int): Map[XYPair, Cart] = {
+def moveWorldOneStep(graph: Map[XYPair, Set[XYPair]], carts: Map[XYPair, Cart], maxBroken: Int, removeBroken: Boolean = false): Map[XYPair, Cart] = {
   var nextCarts = carts
   for {
     loc <- carts.keySet.toList.sorted
     cart = carts(loc)
     // stop when one failed
-    if nextCarts.values.count(_.isWorking) != maxBroken
+    if nextCarts.values.count(!_.isWorking) != maxBroken
   } {
-    nextCarts = cart.move(loc, graph, nextCarts)
+//    ??? // I think that maybe I'm using the wrong carts and should maybe look at updated carts
+    if (nextCarts.contains(loc)) {
+      // if the car has already been wrecked by a prior cart's move it should not move
+      nextCarts = cart.move(loc, graph, nextCarts)
+    }
+
+    if (removeBroken) {
+      val (workingCarts, brokenCarts) = nextCarts.partition(_._2.isWorking)
+      nextCarts = workingCarts
+      if (brokenCarts.nonEmpty) {
+        println(s"removing broken carts = $brokenCarts, workingCarts size = ${workingCarts.size}")
+      }
+    }
   }
   nextCarts
 }
@@ -291,9 +324,9 @@ printGraph(rawInput, inputCarts)
 
 var carts = inputCarts
 while (carts.values.forall(_.isWorking)) {
-//for (_ <- 0 to 20) {
   carts = moveWorldOneStep(graph, carts, 1)
   printGraph(rawInput, carts)
+  println(s"carts left = ${carts.size}")
 }
 
 // Answer 1
@@ -302,4 +335,12 @@ val ans1 = carts.toSet.find(!_._2.isWorking).get._1
 
 //printGraph(rawInput, inputCarts)
 
+var carts2 = inputCarts
+while (carts2.size != 1) {
+  carts2 = moveWorldOneStep(graph, carts2, 1, removeBroken = true)
+  println(s"carts left = ${carts2.size}")
+}
+
 // Answer 2
+val ans2 = carts2.toSet.find(_._2.isWorking).get._1
+// wrong answer = 119,108
