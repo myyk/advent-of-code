@@ -343,4 +343,4 @@ while (carts2.size != 1) {
 
 // Answer 2
 val ans2 = carts2.toSet.find(_._2.isWorking).get._1
-// wrong answer = 119,108
+// 118,108
