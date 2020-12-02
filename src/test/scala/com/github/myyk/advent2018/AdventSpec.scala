@@ -1,4 +1,4 @@
-package example
+package com.github.myyk.advent2018
 
 import org.scalatest._
 
