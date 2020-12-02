@@ -1,12 +1,4 @@
-import scala.io.Source
-
-//TODO: figure out how to reuse the input reading
-val projectBase = "/Users/myyk.seok/workspace/advent-of-code"
-val sampleDir = projectBase + "/samples"
-
-def readInput(day: Int):Seq[String] = {
-  Source.fromFile(s"$sampleDir/day$day.txt").getLines.toSeq
-}
+import com.github.myyk.advent2018._
 
 //val fileSource = false
 val fileSource = true
@@ -17,7 +9,7 @@ val rawInputs = if (fileSource) {
 } else {
   val nums = "2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2".split(" ").toList
   nums.map{s => s.toInt}
-}.map{s => s.toInt}
+}
 
 val intInputs = rawInputs
 

@@ -1,12 +1,4 @@
-import scala.io.Source
-
-//TODO: figure out how to reuse the input reading
-val projectBase = "/Users/myyk.seok/workspace/advent-of-code"
-val sampleDir = projectBase + "/samples"
-
-def readInput(day: Int):Seq[String] = {
-  Source.fromFile(s"$sampleDir/day$day.txt").getLines.toSeq
-}
+import com.github.myyk.advent2018._
 
 val input = readInput(2)
 
@@ -14,7 +6,7 @@ val boxIdLetterNumOccurrences = for {
   boxId <- input
 } yield {
   for {
-    (_, chars) <- boxId.groupBy(next => next)
+    (_, chars) <- boxId.toSeq.groupBy(next => next)
   } yield {
     chars.size
   }
@@ -36,9 +28,9 @@ val checksum = exactlyTwice*exactlyThrice
 val sortedInput = input.sorted.toIndexedSeq
 
 val pairsToDifference = for {
-  i <- 0 until input.sorted.length
+  i <- input.sorted.indices
   left = sortedInput(i)
-  j <- i until input.sorted.length
+  j <- input.sorted.indices
   right = sortedInput(j)
 } yield  {
   (left, right) -> (left zip right).count{ case (a,b) => a != b}

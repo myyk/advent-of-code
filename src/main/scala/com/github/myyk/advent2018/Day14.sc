@@ -1,12 +1,4 @@
-import scala.io.Source
-
-//TODO: figure out how to reuse the input reading
-val projectBase = "/Users/myyk.seok/workspace/advent-of-code"
-val sampleDir = projectBase + "/samples"
-
-def readInput(day: Int):Seq[String] = {
-  Source.fromFile(s"$sampleDir/day$day.txt").getLines.toSeq
-}
+import com.github.myyk.advent2018._
 
 //val fileSource = false
 val fileSource = true
@@ -57,7 +49,7 @@ while (recipes.size < rawInput + 10) {
 println(recipes.mkString(" "))
 
 // Answer 1
-val ans1 = recipes.drop(rawInput).take(10).mkString
+val ans1 = recipes.slice(rawInput, rawInput + 10).mkString
 // 6107101544
 
 // reset inputs

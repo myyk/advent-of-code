@@ -1,12 +1,4 @@
-import scala.io.Source
-
-//TODO: figure out how to reuse the input reading
-val projectBase = "/Users/myyk.seok/workspace/advent-of-code"
-val sampleDir = projectBase + "/samples"
-
-def readInput(day: Int):Seq[String] = {
-  Source.fromFile(s"$sampleDir/day$day.txt").getLines.toSeq
-}
+import com.github.myyk.advent2018._
 
 //val fileSource = false
 val fileSource = true
@@ -53,13 +45,11 @@ for {
   next <- rawInput
 } {
   next match {
-    case initialReg(potSequence) => {
+    case initialReg(potSequence) =>
       pots = makePots(potSequence)
-    }
-    case growRuleReg(rule, toGrow) if toGrow == "#" => {
+    case growRuleReg(rule, toGrow) if toGrow == "#" =>
       val result = rule.map(_ == '#')
       growRules = growRules + ((result(0), result(1), result(2), result(3), result(4)))
-    }
     case _ =>
   }
 }

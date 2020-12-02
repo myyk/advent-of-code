@@ -50,6 +50,7 @@ cmake-build-*/
 out/
 .idea/
 *.iml
+.bsp
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/

@@ -1,12 +1,4 @@
-import scala.io.Source
-
-//TODO: figure out how to reuse the input reading
-val projectBase = "/Users/myyk.seok/workspace/advent-of-code"
-val sampleDir = projectBase + "/samples"
-
-def readInput(day: Int):Seq[String] = {
-  Source.fromFile(s"$sampleDir/day$day.txt").getLines.toSeq
-}
+import com.github.myyk.advent2018._
 
 //val fileSource = false
 val fileSource = true
@@ -111,7 +103,7 @@ def average(lights: Set[XYPair]): XYPair = {
   val xAvg = lights.toList.map(_.x).sum / lights.size
   val yAvg = lights.toList.map(_.y).sum / lights.size
 
-  return XYPair(xAvg, yAvg)
+  XYPair(xAvg, yAvg)
 }
 
 def maxDistance(point: XYPair, lights: Set[XYPair]): Double = {

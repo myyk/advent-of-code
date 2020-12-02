@@ -1,12 +1,4 @@
-import scala.io.Source
-
-//TODO: figure out how to reuse the input reading
-val projectBase = "/Users/myyk.seok/workspace/advent-of-code"
-val sampleDir = projectBase + "/samples"
-
-def readInput(day: Int):Seq[String] = {
-  Source.fromFile(s"$sampleDir/day$day.txt").getLines.toSeq
-}
+import com.github.myyk.advent2018._
 
 val inputs = readInput(5).head.toVector
 
@@ -59,8 +51,8 @@ def makeExclusionaryPolymers(in: Vector[Char]): Map[Char, Vector[Char]] = {
   val exclusionaryPolymers = for {
     c <- charSet
   } yield {
-    val polymerExludingC = in.filterNot(n => n == c || n == c.toUpper)
-    (c -> fullyReact(polymerExludingC))
+    val polymerExcludingC = in.filterNot(n => n == c || n == c.toUpper)
+    c -> fullyReact(polymerExcludingC)
   }
   exclusionaryPolymers.toMap
 }

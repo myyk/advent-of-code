@@ -1,16 +1,8 @@
-import scala.io.Source
-
-//TODO: figure out how to reuse the input reading
-val projectBase = "/Users/myyk.seok/workspace/advent-of-code"
-val sampleDir = projectBase + "/samples"
-
-def readInput(day: Int):Seq[String] = {
-  Source.fromFile(s"$sampleDir/day$day.txt").getLines.toSeq
-}
+import com.github.myyk.advent2018._
 
 val fileSource = false
 //val fileSource = true
-val rawInput = if (fileSource) {
+val rawInputSeq = if (fileSource) {
   readInput(9)
 } else {
 //  Seq("9 players; last marble is worth 25 points")
@@ -19,7 +11,8 @@ val rawInput = if (fileSource) {
 //  Seq("30 players; last marble is worth 5807 points")
 //  Seq("459 players; last marble is worth 71790 points")
   Seq("459 players; last marble is worth 7179000 points")
-}.head
+}
+val rawInput = rawInputSeq.head
 
 val r = raw"(\d+) players; last marble is worth (\d+) points".r
 

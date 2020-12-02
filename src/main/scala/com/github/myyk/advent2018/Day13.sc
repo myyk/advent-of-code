@@ -1,12 +1,4 @@
-import scala.io.Source
-
-//TODO: figure out how to reuse the input reading
-val projectBase = "/Users/myyk.seok/workspace/advent-of-code"
-val sampleDir = projectBase + "/samples"
-
-def readInput(day: Int):Seq[String] = {
-  Source.fromFile(s"$sampleDir/day$day.txt").getLines.toSeq
-}
+import com.github.myyk.advent2018._
 
 //val fileSource = false
 val fileSource = true
@@ -62,7 +54,7 @@ case class XYPair(x:Int, y:Int) {
 }
 
 implicit val XYPairOrdering: Ordering[XYPair] =
-  Ordering by (loc => (loc.x, loc.y))
+  Ordering by[XYPair,(Int,Int)] (loc => (loc.x, loc.y))
 
 case class Cart(direction: Char, intersectionNum: Int = 0, isWorking: Boolean = true) {
   // not the best data modeling, but this is throw away code
@@ -248,7 +240,7 @@ def printGraph(input: Iterable[String], carts: Map[XYPair, Cart]): Unit = {
   for {
     (nextLine, y) <- input.zipWithIndex
   } yield {
-    val sb = StringBuilder.newBuilder
+    val sb = new StringBuilder()
     sb.append(f"$y%03d")
 
     for {
