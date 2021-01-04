@@ -10,6 +10,6 @@ package object advent2018 {
   val sampleDir = projectBase + "/samples/2018"
 
   def readInput(day: Int):Seq[String] = {
-    Using(Source.fromFile(s"$sampleDir/day$day.txt")) { source => source.getLines.toSeq }.get
+    Using(Source.fromFile(s"$sampleDir/day$day.txt")) { source => source.getLines().toSeq }.get
   }
 }
