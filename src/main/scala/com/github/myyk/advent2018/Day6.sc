@@ -7,7 +7,7 @@ val projectBase = "/Users/myyk.seok/workspace/advent-of-code"
 val sampleDir = projectBase + "/samples"
 
 def readInput(day: Int):Seq[String] = {
-  Source.fromFile(s"$sampleDir/day$day.txt").getLines.toSeq
+  Source.fromResource(s"samples/2018/day$day.txt").getLines.toSeq
 }
 
 case class Coor(x:Int, y:Int, value: Char = '.')
@@ -17,7 +17,7 @@ val fileSource = true
 //val fileSource = false
 val rawInputs = if (fileSource) {
   for {
-    next <- readInput(6)
+    next <- com.github.myyk.readInput(20186)
   } yield  {
     val splits = next.split(",")
     Coor(splits(0).toInt, splits(1).trim.toInt)

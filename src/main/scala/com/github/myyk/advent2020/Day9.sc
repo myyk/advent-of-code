@@ -1,6 +1,6 @@
 import com.github.myyk.advent2020._
 
-val input = readInput(9).toVector.map(_.toLong)
+val input = com.github.myyk.readInput(20209).toVector.map(_.toLong)
 
 val preambleLen = 25
 

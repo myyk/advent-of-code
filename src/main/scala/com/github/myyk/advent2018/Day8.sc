@@ -3,7 +3,7 @@ import com.github.myyk.advent2018._
 //val fileSource = false
 val fileSource = true
 val rawInputs = if (fileSource) {
-  val first = readInput(8).head
+  val first = com.github.myyk.readInput(20188).head
   val splits = first.split(" ").toList
   splits.map{s => s.toInt}
 } else {

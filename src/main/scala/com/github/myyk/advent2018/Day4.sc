@@ -1,6 +1,6 @@
 import com.github.myyk.advent2018._
 
-val inputs = readInput(4).sorted
+val inputs = com.github.myyk.readInput(20184).sorted
 
 val entry = raw"\[(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})\] (.*)".r
 val shiftBeginSummary = raw"Guard #(\d+) begins shift".r

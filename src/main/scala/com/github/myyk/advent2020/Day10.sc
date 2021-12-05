@@ -1,7 +1,7 @@
 import com.github.myyk.advent2020._
 import scala.collection.mutable
 
-val input = readInput(10).map(_.toInt)
+val input = com.github.myyk.readInput(202010).map(_.toInt)
 
 val joltageTolerance = 3
 val deviceJoltage = input.max + 3

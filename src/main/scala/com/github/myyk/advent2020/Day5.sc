@@ -1,6 +1,6 @@
 import com.github.myyk.advent2020._
 
-val input = readInput(5)
+val input = com.github.myyk.readInput(20205)
 
 // Row - Convert to binary in order and then just use string binary to int.
 val binaryMapping= Map(

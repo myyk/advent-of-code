@@ -3,7 +3,7 @@ import com.github.myyk.advent2020._
 val active = '#'
 val inactive = '.'
 
-val input = readInput(17)
+val input = com.github.myyk.readInput(202017)
 
 case class Coordinate(x:Int, y:Int, z: Int, h: Int) {
   def neighbors: Seq[Coordinate] = {

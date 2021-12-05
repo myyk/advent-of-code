@@ -5,7 +5,7 @@ import scala.util.control.Breaks
 //val fileSource = false
 val fileSource = true
 val rawInput = if (fileSource) {
-  readInput(15)
+  com.github.myyk.readInput(201815)
 } else {
   ???
 }

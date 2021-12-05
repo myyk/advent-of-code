@@ -1,6 +1,6 @@
 import com.github.myyk.advent2020._
 
-val input = readInput(6)
+val input = com.github.myyk.readInput(20206)
 
 // TODO: same input grouping as Day4, move to a commmon function
 var groupedInput = Vector.empty[String]

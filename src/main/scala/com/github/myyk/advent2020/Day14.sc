@@ -1,6 +1,6 @@
 import com.github.myyk.advent2020._
 
-val input = readInput(14)
+val input = com.github.myyk.readInput(202014)
 
 val maskPattern = "mask = (.*+)".r
 val storePattern = "mem([\\d]+) = ([\\d]+)".r

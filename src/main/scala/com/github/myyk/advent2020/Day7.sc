@@ -3,7 +3,7 @@ import com.github.myyk.advent2020._
 import scala.annotation.tailrec
 import scala.collection.mutable
 
-val input = readInput(7)
+val input = com.github.myyk.readInput(20207)
 
 // stored from bag to types it has to hold
 val graph = mutable.Map.empty[String, mutable.Map[String, Int]]

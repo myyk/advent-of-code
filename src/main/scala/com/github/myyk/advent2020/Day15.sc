@@ -1,6 +1,6 @@
 import com.github.myyk.advent2020._
 
-val input = readInput(15).map(_.split(",").map(_.toInt)).flatten
+val input = com.github.myyk.readInput(202015).map(_.split(",").map(_.toInt)).flatten
 
 // plays to 'finalTurn' turn of the game and returns the value of the last turn
 def playGame(finalTurn:Int): Int = {

@@ -1,6 +1,6 @@
 import com.github.myyk.advent2020._
 
-val input = readInput(3)
+val input = com.github.myyk.readInput(20203)
 
 val open = '.'
 val tree = '#'

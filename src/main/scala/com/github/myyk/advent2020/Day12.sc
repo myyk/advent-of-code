@@ -1,6 +1,6 @@
 import com.github.myyk.advent2020._
 
-val input = readInput(12)
+val input = com.github.myyk.readInput(202012)
 
 // assuming north is positive, south is negative.
 // assuming east is positive, west is negative.

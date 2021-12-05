@@ -1,6 +1,6 @@
 import com.github.myyk.advent2020._
 
-val input = readInput(18)
+val input = com.github.myyk.readInput(202018)
 
 sealed trait Token
 sealed trait Operation extends Token {

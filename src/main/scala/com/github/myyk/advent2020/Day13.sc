@@ -1,6 +1,6 @@
 import com.github.myyk.advent2020._
 
-val input = readInput(13)
+val input = com.github.myyk.readInput(202013)
 
 val earliestLeaveTime = input.head.toInt
 val buses = for {

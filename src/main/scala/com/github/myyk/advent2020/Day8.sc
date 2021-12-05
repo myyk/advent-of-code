@@ -1,6 +1,6 @@
 import com.github.myyk.advent2020._
 
-val input = readInput(8).toVector
+val input = com.github.myyk.readInput(20208).toVector
 
 sealed trait Command
 case class Noop(value: Int) extends Command

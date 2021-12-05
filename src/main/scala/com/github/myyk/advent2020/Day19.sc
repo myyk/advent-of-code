@@ -1,6 +1,6 @@
 import com.github.myyk.advent2020._
 
-val input = readInput(19)
+val input = com.github.myyk.readInput(202019)
 
 val (_, emptyIndex) = input.zipWithIndex.find(_._1.isEmpty).get
 val (ruleStrs, messagesStrs) = input.splitAt(emptyIndex)

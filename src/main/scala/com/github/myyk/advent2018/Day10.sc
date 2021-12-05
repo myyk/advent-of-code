@@ -3,7 +3,7 @@ import com.github.myyk.advent2018._
 //val fileSource = false
 val fileSource = true
 val rawInput = if (fileSource) {
-  readInput(10)
+  com.github.myyk.readInput(201810)
 } else {
   Seq(
     "position=< 9,  1> velocity=< 0,  2>",

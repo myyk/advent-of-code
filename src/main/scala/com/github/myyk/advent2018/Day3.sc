@@ -1,6 +1,6 @@
 import com.github.myyk.advent2018._
 
-val inputs = readInput(3)
+val inputs = com.github.myyk.readInput(20183)
 
 val claim = raw"#(\d+) @ (\d+),(\d+): (\d+)x(\d+)".r
 case class Claim(id: Int, offsetX: Int, offsetY: Int, sizeX: Int, sizeY: Int)

@@ -6,7 +6,7 @@ import scala.collection.mutable
 val fileSource = true
 //val fileSource = false
 val rawInputs = if (fileSource) {
-  readInput(7)
+  com.github.myyk.readInput(20187)
 } else {
   List(
     "Step C must be finished before step A can begin.",

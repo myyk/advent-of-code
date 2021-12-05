@@ -1,6 +1,6 @@
 import com.github.myyk.advent2020._
 
-val input = readInput(2)
+val input = com.github.myyk.readInput(20202)
 
 val r = raw"(\d+)-(\d+) (\w): (\w+)".r
 

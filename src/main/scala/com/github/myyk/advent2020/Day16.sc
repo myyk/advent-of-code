@@ -1,6 +1,6 @@
 import com.github.myyk.advent2020._
 
-val input = readInput(16)
+val input = com.github.myyk.readInput(202016)
 
 val constraintPattern = "([\\w\\s]+): ([\\d]+)-([\\d]+) or ([\\d]+)-([\\d]+)".r
 

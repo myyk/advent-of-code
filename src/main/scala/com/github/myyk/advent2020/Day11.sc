@@ -1,6 +1,6 @@
 import com.github.myyk.advent2020._
 
-val input = readInput(11).toVector
+val input = com.github.myyk.readInput(202011).toVector
 
 sealed trait Space
 object Floor extends Space

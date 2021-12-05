@@ -1,6 +1,6 @@
 import com.github.myyk.advent2018._
 
-val input = readInput(2)
+val input = com.github.myyk.readInput(20182)
 
 val boxIdLetterNumOccurrences = for {
   boxId <- input

@@ -3,7 +3,7 @@ import com.github.myyk.advent2018._
 //val fileSource = false
 val fileSource = true
 val rawInput = if (fileSource) {
-  readInput(12)
+  com.github.myyk.readInput(201812)
 } else {
   Seq("initial state: #..#.#..##......###...###",
     "",

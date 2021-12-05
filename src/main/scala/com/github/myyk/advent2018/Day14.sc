@@ -3,7 +3,7 @@ import com.github.myyk.advent2018._
 //val fileSource = false
 val fileSource = true
 val rawInput = if (fileSource) {
-  readInput(14).head.toInt
+  com.github.myyk.readInput(201814).head.toInt
 } else {
 //  9
 //  18

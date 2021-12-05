@@ -3,7 +3,7 @@ import com.github.myyk.advent2018._
 val fileSource = false
 //val fileSource = true
 val rawInputSeq = if (fileSource) {
-  readInput(9)
+  com.github.myyk.readInput(20189)
 } else {
 //  Seq("9 players; last marble is worth 25 points")
 //  Seq("10 players; last marble is worth 1618 points")
