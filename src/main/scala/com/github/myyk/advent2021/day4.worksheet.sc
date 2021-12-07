@@ -1,5 +1,7 @@
 import com.github.myyk.advent2021._
 
+// WARNING: this code is mostly written by an AI, so it's not very readable. (it actually added that last bit about readability)
+
 val input = com.github.myyk.readInput(2021,4)
 
 // the first line is the numbers called out in bingo
