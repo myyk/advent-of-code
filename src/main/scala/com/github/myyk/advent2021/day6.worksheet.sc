@@ -96,3 +96,4 @@ val inputLanternFish256 = runSimulation(inputLanternFish, 256)
 val inputLanternFishCount256 = countFish(inputLanternFish256)
 
 val answer2 = inputLanternFishCount256
+//1733403626279
