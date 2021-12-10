@@ -217,3 +217,4 @@ assert(testOutput == 5353)
 
 // add all entry's descrambled outputs together
 val answer2 = entries.map(_.descrambleOutput).sum
+// 1010472
