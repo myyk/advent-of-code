@@ -1,10 +1,5 @@
 {
   "recommendations": [
-    "arrterian.nix-env-selector",
-    "bbenoist.nix",
-    "jnoortheen.nix-ide",
-    "redhat.vscode-commons",
-    "redhat.vscode-yaml",
     "scalameta.metals",
   ]
 }

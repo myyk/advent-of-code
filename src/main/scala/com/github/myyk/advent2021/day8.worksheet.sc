@@ -1,6 +1,6 @@
 import com.github.myyk.advent2021._
 
-val input = com.github.myyk.readInput(2021,8)
+val input = readInput(2021,8)
 
 val segmentsCountToDigits = Map(
     2 -> 1,

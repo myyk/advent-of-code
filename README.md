@@ -1,43 +1,21 @@
-# sbt-nix
+# Advent of Code
 
-The only requirement to compile and run this project is [Nix](https://nixos.org/download.html). You can install it with the following command:
+This project contains some solutions for https://adventofcode.com/. I kind of try to keep the old ones running, but it's not easy with language migrations.
 
-```shell
-curl -L https://nixos.org/nix/install | sh
-```
+# 2018
 
-To have `coursier`, `java` and `sbt` available, run `nix-shell`. Then you can use any of these packages as usual.
+First year attempted.
 
-### Create Docker image
+# 2020
 
-Note: in order to create the `base-jre`, you also need to have Docker installed as it needs to run as daemon so it cannot be provided in the `shell.nix`.
+Second year attempted.
 
-```shell
-> nix-build nix/docker.nix -o result-base-jre
-> docker load < result-base-jre
-> sbt "docker:publishLocal"
-```
+# 2021
 
-Run the Docker image.
+For the first many problems, I tried to get VS Code to solve all the questions.
 
-```shell
-> docker run -it sbt-nix-advent-of-code:0.1.0-SNAPSHOT
-```
+Used `nix` in the setup.
 
-### Build a binary
+# 2022
 
-Running `nix-build` will pick up `default.nix`, which uses [sbt-derivation](https://github.com/zaninime/sbt-derivation).
-
-```shell
-> nix-build
-```
-
-Run the binary as follows.
-
-```shell
-> result/bin/sbt-nix-advent-of-code
-```
-
-### Notes
-
-Make sure you read the comprehensive guide at https://github.com/gvolpe/sbt-nix.g8, if you feel stuck.
+Migrated to DevContainers for easier setup.

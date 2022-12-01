@@ -1,6 +1,6 @@
 import com.github.myyk.advent2021._
 
-val input = com.github.myyk.readInput(2021,1).map(_.toInt)
+val input = readInput(2021,1).map(_.toInt)
 
 // count the number of times that the previous number is less than the next number in input
 def countIncreasing(input: Seq[Int]): Int = {

@@ -1,7 +1,7 @@
 import simulacrum.op
 import com.github.myyk.advent2021._
 
-val input = com.github.myyk.readInput(2021,10).map(_.toList)
+val input = readInput(2021,10).map(_.toList)
 
 // If a chunk opens with (, it must close with ).
 // If a chunk opens with [, it must close with ].

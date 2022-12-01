@@ -2,7 +2,7 @@ import com.github.myyk.advent2021._
 
 // WARNING: this code is mostly written by an AI, so it's not very readable. (it actually added that last bit about readability)
 
-val input = com.github.myyk.readInput(2021,4)
+val input = readInput(2021,4)
 
 // the first line is the numbers called out in bingo
 // next is a bunch of 5x5 bingo cards
@@ -167,19 +167,23 @@ def playBingoUntilNWins(cards: Seq[BingoCard], numbers: Seq[Int], wins: Int = 1)
     // else continue to the next number
     var markedCards = cards
     var cardsRemoved = 0
-    for (number <- numbers) {
-        markedCards = markedCards.map(_.mark(number))
-        markedCards.filter(_.isBingo).map { bingoCard =>
-            // remove card
-            markedCards = markedCards.filterNot(bingoCard.equals)
-            cardsRemoved += 1
-            if (cardsRemoved == wins) {
-                return (bingoCard, number)
+
+    import scala.util.control.NonLocalReturns._
+    returning {
+        for (number <- numbers) {
+            markedCards = markedCards.map(_.mark(number))
+            markedCards.filter(_.isBingo).map { bingoCard =>
+                // remove card
+                markedCards = markedCards.filterNot(bingoCard.equals)
+                cardsRemoved += 1
+                if (cardsRemoved == wins) {
+                    throwReturn((bingoCard, number))
+                }
             }
         }
+        // not possible to get here
+        throwReturn (BingoCard(Seq.empty), -1)
     }
-    // not possible to get here
-    return (BingoCard(Seq.empty), -1)
 }
 
 val (winningCard, winningNumber) = playBingoUntilNWins(bingoCards, bingoNumbers, 1)

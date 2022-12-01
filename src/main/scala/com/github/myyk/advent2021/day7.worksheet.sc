@@ -1,6 +1,6 @@
 import com.github.myyk.advent2021._
 
-val crabLocations = com.github.myyk.readInput(2021,7).head.split(",").map(_.toInt).toSeq
+val crabLocations = readInput(2021,7).head.split(",").map(_.toInt).toSeq
 
 crabLocations.min
 crabLocations.max

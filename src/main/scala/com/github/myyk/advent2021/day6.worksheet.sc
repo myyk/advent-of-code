@@ -1,6 +1,6 @@
 import com.github.myyk.advent2021._
 
-val input = com.github.myyk.readInput(2021,6).head
+val input = readInput(2021,6).head
 // split by commas into numbers
 val numbers = input.split(",").map(_.toInt)
 

@@ -1,6 +1,6 @@
 import com.github.myyk.advent2021._
 
-val input = com.github.myyk.readInput(2021,3).filter(_.nonEmpty)
+val input = readInput(2021,3).filter(_.nonEmpty)
 
 // WARNING: this code is mostly written by an AI, so it's not very readable. (it actually added that last bit about readability)
 

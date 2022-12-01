@@ -1,23 +1,12 @@
 import Dependencies._
 import com.typesafe.sbt.packager.docker._
 
-ThisBuild / scalaVersion     := "3.1.0"
+ThisBuild / scalaVersion     := "3.2.0"
 ThisBuild / version          := "0.1.0-SNAPSHOT"
 ThisBuild / organization     := "myyk"
 
-val nixDockerSettings = List(
-  name := "sbt-nix-advent-of-code",
-  dockerCommands := Seq(
-    Cmd("FROM", "base-jre:latest"),
-    Cmd("COPY", "1/opt/docker/lib/*.jar", "/lib/"),
-    Cmd("COPY", "2/opt/docker/lib/*.jar", "/app.jar"),
-    ExecCmd("ENTRYPOINT", "java", "-cp", "/app.jar:/lib/*", "com.github.myyk.advent.Hello")
-  )
-)
-
 lazy val root = (project in file("."))
-  .enablePlugins(JavaAppPackaging)
-  .enablePlugins(DockerPlugin)
+  // .enablePlugins(JavaAppPackaging)
   .settings(
     licenses += ("Apache-2.0", new URL("https://www.apache.org/licenses/LICENSE-2.0.txt")),
     libraryDependencies ++= Seq(
@@ -25,4 +14,3 @@ lazy val root = (project in file("."))
       scalaTest % Test
     )
   )
-  .settings(nixDockerSettings: _*)

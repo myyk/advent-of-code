@@ -1,6 +1,6 @@
 import com.github.myyk.advent2021._
 
-val input = com.github.myyk.readInput(2021,9)
+val input = readInput(2021,9)
 
 // the input contains a 2 dimensional array of numbers
 val heights = input.map(_.map(_.asDigit))

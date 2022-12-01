@@ -1,6 +1,6 @@
 import com.github.myyk.advent2021._
 
-val input = com.github.myyk.readInput(2021,11)
+val input = readInput(2021,11)
 
 // map input to numbers
 val octopuses = input.map(_.toSeq.map(_.toInt - 48))

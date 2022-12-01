@@ -1,6 +1,6 @@
 import com.github.myyk.advent2021._
 
-val input = com.github.myyk.readInput(2021,1)
+val input = readInput(2021,1)
 
 val answer1 = 1
 
