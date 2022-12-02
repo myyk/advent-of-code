@@ -1,6 +1,6 @@
 import com.github.myyk._
 
-val input = readInput(2022,1)
+val input = readInput(2022,2)
 
 val answer1 = 1
 
