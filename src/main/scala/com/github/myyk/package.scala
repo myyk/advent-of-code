@@ -1,4 +1,4 @@
-package com.github.myyk.advent2021
+package com.github.myyk
 
 import scala.io.Source
 import scala.util.Using

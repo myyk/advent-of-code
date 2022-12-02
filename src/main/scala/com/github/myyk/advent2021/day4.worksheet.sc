@@ -1,4 +1,4 @@
-import com.github.myyk.advent2021._
+import com.github.myyk._
 
 // WARNING: this code is mostly written by an AI, so it's not very readable. (it actually added that last bit about readability)
 

@@ -1,4 +1,4 @@
-import com.github.myyk.advent2021._
+import com.github.myyk._
 
 val crabLocations = readInput(2021,7).head.split(",").map(_.toInt).toSeq
 
