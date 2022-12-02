@@ -1,13 +1,13 @@
-import com.github.myyk.advent2018._
+import com.github.myyk._
 
-val inputs = com.github.myyk.readInput(20183)
+val inputs = readInput(2018, 3)
 
 val claim = raw"#(\d+) @ (\d+),(\d+): (\d+)x(\d+)".r
 case class Claim(id: Int, offsetX: Int, offsetY: Int, sizeX: Int, sizeY: Int)
 val claims = for {
   input <- inputs
 } yield {
-  val claim(id, offsetX, offsetY, sizeX, sizeY) = input
+  val claim(id, offsetX, offsetY, sizeX, sizeY) = input: @unchecked
   Claim(id.toInt, offsetX.toInt, offsetY.toInt, sizeX.toInt, sizeY.toInt)
 }
 

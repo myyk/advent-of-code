@@ -1,6 +1,6 @@
-import com.github.myyk.advent2018._
+import com.github.myyk._
 
-val input = com.github.myyk.readInput(2018,2)
+val input = readInput(2018,2)
 
 val boxIdLetterNumOccurrences = for {
   boxId <- input
@@ -36,7 +36,7 @@ val pairsToDifference = for {
   (left, right) -> (left zip right).count{ case (a,b) => a != b}
 }
 
-val Some(((boxId1, boxId2), _)) =  pairsToDifference.find{case ((_, _), difference) => difference == 1}
+val Some(((boxId1, boxId2), _)) =  pairsToDifference.find{case ((_, _), difference) => difference == 1}: @unchecked
 
 // Answer 2
 val same = (boxId1 zip boxId2).filter{case (a,b) => a == b}.map(_._1).mkString

@@ -1,6 +1,6 @@
-import com.github.myyk.advent2018._
+import com.github.myyk._
 
-val input = com.github.myyk.readInput(2018,1).map(_.toInt)
+val input = readInput(2018,1).map(_.toInt)
 
 // Answer 1
 val answer1 = input.sum

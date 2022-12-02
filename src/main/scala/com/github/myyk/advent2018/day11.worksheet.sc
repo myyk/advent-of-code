@@ -27,7 +27,7 @@ def maxPower(fuelSquareSize: Int): (Long, Int, Int) = {
     y <- 0 until fuelCellDimension - fuelSquareSize + 1
   } yield {
     val power = for {
-      ox <- 0 until fuelSquareSize
+    ox <- 0 until fuelSquareSize
       oy <- 0 until fuelSquareSize
     } yield {
       fuelCells(x + ox)(y + oy)
@@ -35,7 +35,7 @@ def maxPower(fuelSquareSize: Int): (Long, Int, Int) = {
     (power.sum, x, y)
   }
 
- powers.max
+  powers.max
 }
 
 val (maxPowerValue, maxPowerX, maxPowerY) = maxPower(3)

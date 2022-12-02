@@ -1,4 +1,4 @@
-import com.github.myyk.advent2018._
+import com.github.myyk._
 
 import scala.annotation.tailrec
 import scala.collection.mutable
@@ -22,7 +22,7 @@ val rawInputs = if (fileSource) {
 val entry = raw"Step (\w) must be finished before step (\w) can begin.".r
 
 val inputs = for {
-  entry(to, from) <- rawInputs
+  case entry(to, from) <- rawInputs
 } yield {
   to.toCharArray.head -> from.toCharArray.head
 }
@@ -42,7 +42,7 @@ var graph = makeGraph()
 val roots = graph.keySet -- graph.values.flatten.toSet
 
 @tailrec
-def topoSort(possibleRoots: Set[Char], graph: Map[Char, Set[Char]], result: List[Char]): List[Char] = {
+final def topoSort(possibleRoots: Set[Char], graph: Map[Char, Set[Char]], result: List[Char]): List[Char] = {
   if (possibleRoots.isEmpty) {
     result.reverse
   } else {

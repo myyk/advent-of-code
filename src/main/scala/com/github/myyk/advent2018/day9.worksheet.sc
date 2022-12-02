@@ -1,4 +1,4 @@
-import com.github.myyk.advent2018._
+import com.github.myyk._
 
 val fileSource = false
 //val fileSource = true
@@ -43,4 +43,5 @@ val (player, score) = playerScores.maxBy{case (_, score) => score}
 // 386151
 
 // Answer 2
+val answer2 = score
 // 3211264152

@@ -1,6 +1,6 @@
-import com.github.myyk.advent2018._
+import com.github.myyk._
 
-val inputs = com.github.myyk.readInput(2018,5).head.toVector
+val inputs = readInput(2018,5).head.toVector
 
 def reactOnce(in: Vector[Char]): Vector[Char] = {
   var nextInput = Vector.empty[Char]

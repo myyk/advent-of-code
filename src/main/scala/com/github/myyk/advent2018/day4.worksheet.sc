@@ -1,6 +1,6 @@
-import com.github.myyk.advent2018._
+import com.github.myyk._
 
-val inputs = com.github.myyk.readInput(2018,4).sorted
+val inputs = readInput(2018,4).sorted
 
 val entry = raw"\[(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})\] (.*)".r
 val shiftBeginSummary = raw"Guard #(\d+) begins shift".r
@@ -11,7 +11,7 @@ var timeAsleep = 0
 var guardTimesAsleep = Map.empty[Int, Seq[(Int, Int)]].withDefaultValue(Seq.empty)
 
 for {
-  entry(_,_,_,_,mins,summary) <- inputs
+  case entry(_,_,_,_,mins,summary) <- inputs
 } {
   summary match {
     case shiftBeginSummary(id) =>

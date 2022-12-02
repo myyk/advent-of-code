@@ -1,9 +1,9 @@
-import com.github.myyk.advent2018._
+import com.github.myyk._
 
 //val fileSource = false
 val fileSource = true
 val rawInput = if (fileSource) {
-  com.github.myyk.readInput(2018,12)
+  readInput(2018,12)
 } else {
   Seq("initial state: #..#.#..##......###...###",
     "",

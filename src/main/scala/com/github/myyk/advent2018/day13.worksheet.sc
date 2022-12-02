@@ -1,9 +1,9 @@
-import com.github.myyk.advent2018._
+import com.github.myyk._
 
 //val fileSource = false
 val fileSource = true
 val rawInput = if (fileSource) {
-  com.github.myyk.readInput(2018,13)
+  readInput(2018,13)
 } else {
   // Example 1
 //  Seq(
@@ -36,25 +36,25 @@ case class XYPair(x:Int, y:Int) {
     Math.sqrt(Math.pow(other.x - this.x, 2) + Math.pow(other.y - this.y, 2))
   }
 
-  def ^(): XYPair = {
+  def `^`: XYPair = {
     this.copy(y = y-1)
   }
 
-  def v(): XYPair = {
+  def v: XYPair = {
     this.copy(y = y+1)
   }
 
-  def >(): XYPair = {
+  def `>`: XYPair = {
     this.copy(x = x+1)
   }
 
-  def <(): XYPair = {
+  def `<`: XYPair = {
     this.copy(x = x-1)
   }
 }
 
 implicit val XYPairOrdering: Ordering[XYPair] =
-  Ordering by[XYPair,(Int,Int)] (loc => (loc.x, loc.y))
+  Ordering.by[XYPair,(Int,Int)] (loc => (loc.x, loc.y))
 
 case class Cart(direction: Char, intersectionNum: Int = 0, isWorking: Boolean = true) {
   // not the best data modeling, but this is throw away code

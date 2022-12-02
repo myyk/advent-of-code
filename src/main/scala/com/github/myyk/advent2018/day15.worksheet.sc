@@ -1,4 +1,4 @@
-import com.github.myyk.advent2018._
+import com.github.myyk._
 
 import scala.util.control.Breaks
 
