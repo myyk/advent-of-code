@@ -1,4 +1,4 @@
-import com.github.myyk.advent2020._
+import com.github.myyk._
 
 val input = com.github.myyk.readInput(2020,18)
 
@@ -40,22 +40,26 @@ def calculateWeirdMath1(tokens: Iterator[Token]): Long = {
   var total = 0L
   var op: Operation = Add
 
-  for {
-    token <- tokens
-  } {
-    token match {
-      case nextOp: Operation =>
-        op = nextOp
-      case Number(value) =>
-        total = op.calculate(total, value)
-      case Close =>
-        return total
-      case Open =>
-        total = op.calculate(total, calculateWeirdMath1(tokens))
-    }
-  }
+  import scala.util.control.NonLocalReturns._
 
-  total
+  returning {
+    for {
+      token <- tokens
+    } {
+      token match {
+        case nextOp: Operation =>
+          op = nextOp
+        case Number(value) =>
+          total = op.calculate(total, value)
+        case Close =>
+          throwReturn(total)
+        case Open =>
+          total = op.calculate(total, calculateWeirdMath1(tokens))
+      }
+    }
+
+    throwReturn(total)
+  }
 }
 
 val calculations1 = for {
@@ -73,30 +77,34 @@ def calculateWeirdMath2(tokens: Iterator[Token]): Long = {
   var op: Operation = Add
 
 //  println("")
-  for {
-    token <- tokens
-  } {
-    token match {
-      case Add =>
-        op = Add
-      case Multi =>
-        op = Multi
-        val next = calculateWeirdMath2(tokens)
-//        println(s"Multi $next * $total = ${Multi.calculate(total, next)}")
-        return Multi.calculate(total, next)
-      case Number(value) =>
-//        println(s"Add $value + $total = ${op.calculate(total, value)}")
-        total = op.calculate(total, value)
-      case Close =>
-//        println(s"Close $total")
-        return total
-      case Open =>
-        total = op.calculate(total, calculateWeirdMath2(tokens))
-    }
-  }
+  import scala.util.control.NonLocalReturns._
 
-//  println(s"running total = $total")
-  total
+  returning {
+    for {
+      token <- tokens
+    } {
+      token match {
+        case Add =>
+          op = Add
+        case Multi =>
+          op = Multi
+          val next = calculateWeirdMath2(tokens)
+  //        println(s"Multi $next * $total = ${Multi.calculate(total, next)}")
+          throwReturn(Multi.calculate(total, next))
+        case Number(value) =>
+  //        println(s"Add $value + $total = ${op.calculate(total, value)}")
+          total = op.calculate(total, value)
+        case Close =>
+  //        println(s"Close $total")
+          throwReturn(total) 
+        case Open =>
+          total = op.calculate(total, calculateWeirdMath2(tokens))
+      }
+    }
+
+    //  println(s"running total = $total")
+    throwReturn(total) 
+  }
 }
 
 val calculations2 = for {

@@ -1,6 +1,6 @@
-import com.github.myyk.advent2020._
+import com.github.myyk._
 
-val input = com.github.myyk.readInput(2020,1).map(_.toInt)
+val input = readInput(2020,1).map(_.toInt)
 
 val target = 2020
 

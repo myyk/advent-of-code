@@ -1,9 +1,9 @@
-import com.github.myyk.advent2020._
+import com.github.myyk._
 
 import scala.annotation.tailrec
 import scala.collection.mutable
 
-val input = com.github.myyk.readInput(2020,7)
+val input = readInput(2020,7)
 
 // stored from bag to types it has to hold
 val graph = mutable.Map.empty[String, mutable.Map[String, Int]]
@@ -46,7 +46,7 @@ for {
 val target = "shiny gold"
 
 @tailrec
-def findParents(targets: List[String], seen: Set[String]): Set[String]=  {
+final def findParents(targets: List[String], seen: Set[String]): Set[String]=  {
   if (targets.isEmpty) {
     seen
   } else {
@@ -79,8 +79,8 @@ def countBags(targets: List[String], counts: Map[String, Int]): Map[String, Int]
 
 val bagsThatHoldNone = for {
   (name, children) <- graph.toMap
- if children.isEmpty
-}yield {
+  if children.isEmpty
+} yield {
   name -> 1
 }
 val counts = countBags(List(target), bagsThatHoldNone)

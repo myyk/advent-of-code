@@ -1,4 +1,4 @@
-import com.github.myyk.advent2020._
+import com.github.myyk._
 import scala.collection.mutable
 
 val input = com.github.myyk.readInput(2020,10).map(_.toInt)
