@@ -2,13 +2,13 @@ import com.github.myyk._
 
 val input = readInput(2022,8)
 
-val testInput = """
+val testInput = readStringInput("""
 30373
 25512
 65332
 33549
 35390
-""".split("\n").map(_.trim).filter(_.nonEmpty)
+""")
 
 case class Location(col: Int, row: Int)
 
