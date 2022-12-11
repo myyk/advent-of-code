@@ -9,8 +9,12 @@ def readInput(year: Int, day: Int): Seq[String] = {
 
 // Usually from a test string using """. Double check that it is correct in the first and last entries.
 // And might need something else if you need empty lines.
-def readStringInput(str: String): Seq[String] = {
-  str.split("\n").map(_.trim).filter(_.nonEmpty).toSeq
+def readStringInput(str: String, keepEmpty: Boolean = false): Seq[String] = {
+  if (keepEmpty) {
+    str.split("\n").map(_.trim).toSeq
+  } else {
+    str.split("\n").map(_.trim).filter(_.nonEmpty).toSeq
+  }
 }
 
 // Groups the lines that are non-empty and consecutive with each other.
