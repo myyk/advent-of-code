@@ -69,6 +69,17 @@ case class Point(x: Int, y: Int) {
   }
 }
 
+object Points {
+  // provides lower left and upper right of a bounding box
+  def boundaries(points: Iterable[Point]): (Point, Point) = {
+    val pointSet = points.toSet
+    val xs = pointSet.map(_.x)
+    val ys = pointSet.map(_.y)
+    
+    (Point(xs.min, ys.min), Point(xs.max, ys.max))    
+  }
+}
+
 sealed abstract trait Direction {
   val opposite: Direction
 }
